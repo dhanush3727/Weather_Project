@@ -8,6 +8,7 @@ import rain from "../assets/rain.png";
 import snow from "../assets/snow.png";
 import strom from "../assets/storm.png";
 import wind from "../assets/wind.png";
+import { AnimatedCircle } from "react-craftify-spinners";
 
 const Weather = () => {
   const [search, setSearch] = useState("");
@@ -18,15 +19,17 @@ const Weather = () => {
   const fetchWeather = async (param) => {
     setLoading(true);
     try {
-      const res = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${param}&appid=a9b22cf5bb70ad09d92ae3a3162528fa`
-      );
-      const result = await res.json();
-      console.log(result);
-      if (result) {
-        setData(result);
-        setLoading(false);
-      }
+      setTimeout(async () => {
+        const res = await fetch(
+          `https://api.openweathermap.org/data/2.5/weather?q=${param}&appid=a9b22cf5bb70ad09d92ae3a3162528fa`
+        );
+        const result = await res.json();
+        console.log(result);
+        if (result) {
+          setData(result);
+          setLoading(false);
+        }
+      }, 1000);
     } catch (err) {
       console.log(err);
       setLoading(false);
@@ -34,7 +37,7 @@ const Weather = () => {
   };
 
   useEffect(() => {
-    fetchWeather("chennai");
+    fetchWeather("trichy");
   }, []);
 
   const handleSubmit = () => {
@@ -108,7 +111,7 @@ const Weather = () => {
         handleSubmit={handleSubmit}
       />
       {loading ? (
-        <h3 className="loading">Loading...</h3>
+        <AnimatedCircle />
       ) : (
         <div>
           <div className="icons">
